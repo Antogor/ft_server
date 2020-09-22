@@ -14,8 +14,9 @@ fi
 echo -e "\e[32m Coping wordpress.config... \e[0m"
 
 if tar -xzvf wordpress-latest-es_ES.tar.gz>> history.log 2>>error.log; then
-	rm wordpress-latest-es_ES.tar.gz>> history.log 2>>error.log
-	cp wp-config.php wordpress/>> history.log 2>>error.log
+	rm -f wordpress-latest-es_ES.tar.gz>> history.log 2>>error.log
+	rm -f wordpress/wp-config-sample.php >>history.log 2>>error.log
+	cp -f php/wp-config.php wordpress/>> history.log 2>>error.log
 	echo -e "\e[32m Wordpress.config copied\n \e[0m"
 else
 	echo -e "\e[91m Error to copy wrodpress.config\n \e[0m"
@@ -35,10 +36,10 @@ fi
 ## Configure phpMyAdmin
 echo -e "\e[35m Configuring phpMyAdmin...\e[0m"
 if tar -xzvf phpMyAdmin-5.0.2-all-languages.tar.gz>> history.log 2>>error.log; then
-	rm phpMyAdmin-5.0.2-all-languages.tar.gz>> history.log 2>>error.log
-	mv phpMyAdmin-5.0.2-all-languages phpMyAdmin >> history.log 2>>error.log
-	rm phpMyAdmin/config.sample.inc.php>> history.log 2>>error.log
-	cp -f config.inc.php phpMyAdmin/>> history.log 2>>error.log
+	rm -f phpMyAdmin-5.0.2-all-languages.tar.gz>> history.log 2>>error.log
+	mv -f phpMyAdmin-5.0.2-all-languages phpMyAdmin >> history.log 2>>error.log
+	rm -f phpMyAdmin/config.sample.inc.php>> history.log 2>>error.log
+	cp -f php/config.inc.php phpMyAdmin/>> history.log 2>>error.log
 	echo -e "\e[35m Php configured\n \e[0m"
 else
 	echo -e "\e[91m Error to configure php\n \e[0m"
@@ -59,11 +60,12 @@ fi
 ## Starting container
 echo -e "\e[34m Loading container ft_server...\e[0m"
 
-# Conditional to run the container, if not possible the script stop
-if docker run --name ft_server --rm -p 80:80 -p 443:443 -td ft_server:latest>> history.log 2>>error.log; then
-	echo -e "\e[34m Container loaded and runing\n \e[0m"
-else
-	echo -e "\e[91m Docker container couldn't was loaded\n \e[0m"
-	exit 1
-fi
+## Run the container, if not possible the script stop
+docker run --name ft_server --rm -p 80:80 -p 443:443 -it ft_server:latest
+#if docker run --name ft_server --rm -p 80:80 -p 443:443 -it ft_server:latest; then
+	#echo -e "\e[34m Container loaded and runing\n \e[0m"
+#else
+#	echo -e "\e[91m Docker container couldn't was loaded\n \e[0m"
+#	exit 1
+#fi
 

@@ -4,3 +4,5 @@ delete/
 wordpress/
 phpMyAdmin/
 *.log
+*.swp
+phpMyAdmin-5.0.2-all-languages/
