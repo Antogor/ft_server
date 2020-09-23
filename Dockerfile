@@ -6,11 +6,21 @@ ENV AUTOINDEX="on"
 
 RUN apt-get -y update && apt-get -y upgrade && \
 	apt-get install -y nginx php-fpm php-mysql \
-	php-mbstring mariadb-server openssl
+	php-mbstring mariadb-server openssl && wget && \
+	wget https://es.wordpress.org/wordpress-latest-es_ES.tar.gz && \
+	tar -xzvf wordpress-latest-es_ES.tar.gz && \
+	rm -f wordpress-latest-es_ES.tar.gz && \
+	rm -f wordpress/wp-config-sample.php && \
+	mv -f wordpress /var/www/html/ && \
+	wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz && \
+	tar -xzvf phpMyAdmin-5.0.2-all-languages.tar.gz && \
+   	rm -f phpMyAdmin-5.0.2-all-languages.tar.gz && \
+	mv -f phpMyAdmin-5.0.2-all-languages /var/www/html/phpMyAdmin && \
+	rm -f phpMyAdmin/config.sample.inc.php
 
-COPY srcs/wordpress /var/www/html/wordpress
-COPY srcs/phpMyAdmin /var/www/html/phpMyAdmin
 
+COPY srcs/php/wp-config.php /var/www/html/wordpress/
+COPY srcs/php/config.inc.php /var/www/html/phpMyAdmin/
 COPY srcs/nginx_conf/nginx /etc/nginx/sites-available/
 COPY srcs/nginx_conf/nginx /tmp
 COPY srcs/nginx_conf/nginx_auto_off /tmp
