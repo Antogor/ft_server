@@ -36,7 +36,7 @@ RUN	rm -rf /etc/nginx/sites-available/default && \
 	rm -f /var/www/html/index.nginx-debian.html && \
 	rm -rf /etc/nginx/sites-enabled/default && \
 	ln -sf /etc/nginx/sites-available/nginx /etc/nginx/sites-enabled/ && \
-	chown -R www-data:www-data /var/www/html/wordpress && \
+	chown -R www-data:www-data /var/www/* && \
 	chmod -R 755 /var/www/* && \
 	service mysql start && \
 	mysql -u root --password= < /tmp/init.sql && \
