@@ -6,7 +6,7 @@ ENV AUTOINDEX="on"
 
 RUN apt-get -y update && apt-get -y upgrade && \
 	apt-get install -y nginx php-fpm php-mysql \
-	php-mbstring mariadb-server openssl && wget && \
+	php-mbstring mariadb-server openssl && apt-get install -y wget && \
 	wget https://es.wordpress.org/wordpress-latest-es_ES.tar.gz && \
 	tar -xzvf wordpress-latest-es_ES.tar.gz && \
 	rm -f wordpress-latest-es_ES.tar.gz && \
